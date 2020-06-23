@@ -1,0 +1,62 @@
+package TCP;
+
+import java.awt.Container;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.DataOutputStream;
+import java.net.Socket;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JTextField;
+
+public class ATMClient extends JFrame{
+	JTextField tfID;
+	JTextField tfname;
+	JTextField tfbalance;
+	JButton btnSave;
+	public ATMClient() {
+		tfID = new JTextField(15);
+		tfname = new JTextField(15);
+		tfbalance = new JTextField(15);
+		
+		btnSave = new JButton("Save");
+		setLayout(new FlowLayout());
+		Container cont = this.getContentPane();
+        cont.add(tfID);
+        cont.add(tfname);
+        cont.add(tfbalance);        
+        cont.add(btnSave);
+        btnSave.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent arg0) {
+        		try {
+        			Socket skClient = new Socket("localhost", 4010);
+        			String id =tfID.getText();
+        			DataOutputStream outClient = new DataOutputStream(skClient.getOutputStream());
+        			outClient.writeBytes(id+"\n");
+        			outClient.flush();
+        			outClient.close();
+        			skClient.close();
+					
+				} catch (Exception e) {
+					// TODO: handle exception
+					e.printStackTrace();
+				}
+        		
+        	}
+        });
+
+        	
+        
+        
+        pack();
+        setVisible(true);
+	}
+	public static void main(String[] args) {
+		new ATMClient();
+	}
+
+	
+		
+	}
