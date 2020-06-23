@@ -1,0 +1,29 @@
+package TCP;
+
+import java.io.DataInputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+public class ATMServer {
+	public static void main(String[] args) {
+		
+		try {
+			 ServerSocket serverSK = new  ServerSocket(4010);
+			while(true) {
+				Socket skServer = serverSK.accept();
+				DataInputStream inputServer = new DataInputStream(skServer.getInputStream());
+				String chuoi =inputServer.readLine();
+				ATMbusiness db = new ATMbusiness();	
+				int n =db.changeBank("Insert into Account(ID,name,balance) values ('"+chuoi+"','abc','123')");
+				System.out.println("n="+n);
+				inputServer.close();
+				skServer.close();
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
+
+}
