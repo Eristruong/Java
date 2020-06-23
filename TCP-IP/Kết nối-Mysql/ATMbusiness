@@ -1,0 +1,44 @@
+package TCP;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+
+import javax.swing.JOptionPane;
+
+public class ATMbusiness {
+   Connection conn;
+   Statement stmt;
+   //connec db
+   public void connectDB() {
+	   try {
+		   Class.forName("com.mysql.jdbc,driver");
+		   conn = DriverManager.getConnection("jdbc:mysql://localhost/bankdb","root","");
+		   
+				   
+		   
+	    
+		
+	} catch (Exception e) {
+		// TODO: handle exception
+	
+	}   
+  }
+ //change db
+ 	public int changeBank(String sql) {
+ 		int n = 0;
+ 		try {			
+ 			connectDB();
+ 			stmt =conn.createStatement();
+ 			int n1 = stmt.executeUpdate(sql);
+ 			if(n1>0) JOptionPane.showConfirmDialog(null, "success");
+ 			else JOptionPane.showConfirmDialog(null, "fail");
+ 	
+ 		} catch (Exception e) {
+ 			// TODO: handle exception
+ 			e.printStackTrace();
+ 		}
+ 		
+		return n;
+ 	}
+}
